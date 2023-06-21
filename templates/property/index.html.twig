@@ -1,0 +1,89 @@
+{% extends "base.html.twig" %}
+
+{% block title 'Tous nos Biens' %}   
+
+{% block body %}
+<div class="jumbotron">
+    <div class="container text-center">
+        {{form_start(form)}}
+            <div class="form-row align-items-end">
+                <div class="col">
+                {{form_row(form.minSurface)}}
+                </div>
+
+                <div class="col">
+                {{form_row(form.maxPrice)}}
+                </div>
+
+                <div class="col">
+                {{form_row(form.options)}}
+                </div>
+
+                <div class="col">
+                <div class="form-group">
+                <button  class="btn btn-primary">Rechercher</button>
+                </div>
+                </div>
+            </div>
+        {{form_end(form)}}
+    </div>
+
+</div>
+
+<div class="container mt-4">
+    <h1>Voir tous nos Biens </h1>
+        <p> bienvenue sur notre site de vente de Biens 
+        </p>
+        <div class="container">
+   
+   <div class="row flex">
+        {% for property in properties %}
+        <div class="col-3">
+        
+        
+        
+            <div class="card ">
+    
+                <div class="card-body align-items-end">
+                <a href="{{path('property.show',{id:property.id,slug:property.slug})}}">
+                {% if property.imageName %}
+        <img src="/images/carousel/{{ property.imageName }}" | imagine_filter('thumb') }}" alt = "card-img-top" style="width:105%;height:auto;" >
+        {% endif %}
+                    <h5 class="card-title">
+                        {{ property.title }}</a>
+                    </h5>
+                        <p class="card-text">{{property.surface}}m² {{ property.city }} ({{property.postalCode }})</p>
+                        <div c lass="text-primary" style="font-weight: bold;font-size:2rem">{{ property.formattedPrice}} €</div>
+                </div>
+            </div>
+            
+        </div>
+
+        
+            {% endfor %}  
+        </div>
+        <div class="pagination mt-2">
+        {{ knp_pagination_render(properties) }}
+    </div>
+    </div>
+
+
+
+</div>
+
+
+    
+{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+{% endblock %}
+{% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+    <script>
+    $('select').select2();
+    </script>
+{% endblock %}
